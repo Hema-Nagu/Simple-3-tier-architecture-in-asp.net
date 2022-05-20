@@ -1,0 +1,85 @@
+create a Sql server database e.g. "BookDb" and in that 
+create a table using the script below:
+
+CREATE TABLE [dbo].[BookDetails]
+(
+                [BookName] [varchar](100),
+                [Author] [varchar](100),
+                [Publisher] [varchar](200),
+                [Price] [decimal](18, 2) NOT NULL
+)
+
+
+Now create the stored procedure to insert the book details in the table.
+
+CREATE PROCEDURE [dbo].[InsertBookDetails_SP]
+                @BookName                    VARCHAR(100),
+                @Author                             VARCHAR(100),
+                @Publisher                        VARCHAR(200),
+                @Price                                 DECIMAL(18,2)
+AS
+BEGIN
+INSERT INTO BookDetails
+ (
+    BookName,Author,Publisher,Price
+ )
+   VALUES
+(
+   @BookName,@Author,@Publisher,@Price
+)
+END
+
+Create a stored procedure to update the book detail
+
+CREATE PROCEDURE [dbo].[UpdateBookRecord_SP]     
+                @BookName                    VARCHAR(100),
+                @Author                      VARCHAR(100),
+                @Publisher                    VARCHAR(200),
+                @Price                        DECIMAL(18,2)
+AS
+BEGIN
+                UPDATE BookDetails SET
+                                BookName=@BookName,
+                                Author=@Author,
+                                Publisher=@Publisher,
+                                Price=@Price
+                WHERE BookName=@BookName
+END
+
+Create a stored procedure to delete book record
+
+CREATE PROCEDURE [dbo].[DeleteBookRecords_Sp]
+                @BookName            VARCHAR(100)
+AS
+BEGIN
+                DELETE FROM BookDetails WHERE  BookName=@BookName
+END
+
+Create a stored procedure to delete book record
+
+CREATE PROCEDURE [dbo].[FetchBookRecords_Sp]
+AS
+BEGIN
+                SELECT * FROM BookDetails
+END
+
+
+
+Now we need to connect our asp.net application with the sql server database.
+So in the web.config file create the connection string under the <configuration> tag as:
+
+<connectionStrings>
+    <add name="conStr" connectionString="Data Source=localhost;Initial Catalog=BooksDb;Integrated Security=True"/>
+  </connectionStrings>
+
+Now database part is done.  
+Now it's time to write the code for each layer.
+
+
+
+
+
+
+
+
+
